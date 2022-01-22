@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Page, Text} from '@geist-ui/core';
+import {Page, Text} from '@geist-ui/core';
 import {ShoppingCart} from '@geist-ui/icons';
 import {Items, Navbar} from 'styles/navigation/Navbar';
 import {ThemeIcon} from 'components/theme/ThemeIcon';
