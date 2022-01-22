@@ -1,10 +1,7 @@
 import React from 'react';
 import {Moon, Sun} from '@geist-ui/icons';
-
-type Props = {
-    theme: 'light' | 'dark';
-    onThemeChange: () => void;
-}
+import {useRecoilState} from 'recoil';
+import {themeState} from 'lib/recoil/atoms/theme';
 
 /**
  * Display an icon from the theme.
@@ -12,13 +9,16 @@ type Props = {
  * @param {Props} props Component properties.
  * @return {React.ReactElement} Icon.
  */
-export function ThemeIcon(props: Props): React.ReactElement {
-  const {theme = 'light', onThemeChange} = props;
+export function ThemeIcon(): React.ReactElement {
+  const [theme, setTheme] = useRecoilState(themeState );
 
-  const icons = {
-    light: <Moon onClick={onThemeChange} cursor={'pointer'}/>,
-    dark: <Sun onClick={onThemeChange} cursor={'pointer'}/>,
+  const onThemeChange = (): void => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  return icons[theme];
+  if (theme === 'light') {
+    return <Moon onClick={onThemeChange} cursor={'pointer'}/>;
+  } else {
+    return <Sun onClick={onThemeChange} cursor={'pointer'}/>;
+  }
 }

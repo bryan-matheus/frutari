@@ -1,7 +1,8 @@
 import React from 'react';
 import {AppProps} from 'next/app';
-import {GeistProvider, CssBaseline} from '@geist-ui/core';
 import 'inter-ui/inter.css';
+import {RecoilRoot} from 'recoil';
+import ThemeProvider from 'providers/ThemeProvider';
 
 /**
  * App class.
@@ -11,10 +12,11 @@ import 'inter-ui/inter.css';
  */
 function MyApp({Component, pageProps}: AppProps): React.ReactElement {
   return (
-    <GeistProvider themeType="dark">
-      <CssBaseline />
-      <Component {...pageProps} />
-    </GeistProvider>
+    <RecoilRoot>
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 
