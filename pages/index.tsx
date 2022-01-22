@@ -4,13 +4,12 @@ import { Page } from '@geist-ui/core';
 
 function Home() {
   return (
-    <div>
+    <Page>
       <Head>
         <title>Frutari - Buy your daily fruit!</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Page dotBackdrop padding={0} />
-    </div>
+
+    </Page>
   );
 }
 
