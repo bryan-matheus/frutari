@@ -3,6 +3,7 @@ import {AppProps} from 'next/app';
 import 'inter-ui/inter.css';
 import {RecoilRoot} from 'recoil';
 import ThemeProvider from 'providers/ThemeProvider';
+import {Layout} from 'components/layout';
 
 /**
  * App class.
@@ -14,7 +15,9 @@ function MyApp({Component, pageProps}: AppProps): React.ReactElement {
   return (
     <RecoilRoot>
       <ThemeProvider>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </RecoilRoot>
   );

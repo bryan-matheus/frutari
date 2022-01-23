@@ -4,6 +4,7 @@ import {ShoppingCart} from '@geist-ui/icons';
 import {ThemeIcon} from 'components/theme/ThemeIcon';
 import Image from 'next/image';
 import {Items, Navbar, NavbarLogoWrapper} from 'styles/navigation/Navbar';
+import Link from 'next/link';
 
 /**
  * Displays navigation bar.
@@ -13,13 +14,15 @@ import {Items, Navbar, NavbarLogoWrapper} from 'styles/navigation/Navbar';
 export function NavigationBar(): React.ReactElement {
   return (
     <Navbar>
-      <NavbarLogoWrapper>
-        <Image
-          src={'/logo.png'}
-          width={36}
-          height={36} />
-        <Text h2 margin={0}>Frutari</Text>
-      </NavbarLogoWrapper>
+      <Link href={'/'}>
+        <NavbarLogoWrapper>
+          <Image
+            src={'/logo.png'}
+            width={36}
+            height={36} />
+          <Text h2 margin={0}>Frutari</Text>
+        </NavbarLogoWrapper>
+      </Link>
       <Items>
         <ThemeIcon />
         <ShoppingCart cursor={'pointer'} />
