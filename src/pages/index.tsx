@@ -7,7 +7,7 @@ import {
   Button,
   Link,
 } from '@geist-ui/core';
-import {ShoppingCart} from '@geist-ui/icons';
+import {Plus, ShoppingCart} from '@geist-ui/icons';
 import {Items, Navbar} from 'styles/navigation/Navbar';
 import {ThemeIcon} from 'components/theme/ThemeIcon';
 import {Fruit} from 'data/type/Fruit';
@@ -33,18 +33,26 @@ export default function Home({fruits}: Props): React.ReactElement {
         </Items>
       </Navbar>
 
-      <Grid.Container gap={2}
+      <Grid.Container
+        gap={2}
         justify="center"
         marginTop={'32px'}
         marginBottom={'32px'}>
         {fruits.map((fruit) => (
-          <Grid key={`fruit_${fruit.id}`} xs={6}>
-            <Card style={{cursor: 'pointer'}} shadow width="100%">
+          <Grid
+            key={`fruit_${fruit.id}`}
+            justify='center'
+            xs={12}
+            sm={12}
+            md={12}
+            lg={6}
+            xl={6}>
+            <Card shadow width="100%">
               <Card.Content>
                 <Text h4>{fruit.name}</Text>
                 <Text p>
-                  The {fruit.name} from genus {' '}
-                  {fruit.genus} and the order {fruit.order}
+                  The {fruit.name} is genus {' '}
+                  {fruit.genus} and is {fruit.order} order.
                 </Text>
               </Card.Content>
 
@@ -60,7 +68,10 @@ export default function Home({fruits}: Props): React.ReactElement {
                       .format(fruit.nutritions.fat + 0.5)
                   }
                 </Text>
-                <Button type='success-light' ghost>Add to cart</Button>
+                <Button type='success-light' auto
+                  ghost scale={1/1.5} icon={<Plus />}>
+                    Add to cart
+                </Button>
               </Card.Footer>
             </Card>
           </Grid>
