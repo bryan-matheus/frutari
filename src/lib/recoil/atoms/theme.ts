@@ -1,15 +1,11 @@
 import {atom, selector} from 'recoil';
 
-export const themeState = atom({
+export const themeState = atom<string | null>({
   key: 'theme',
-  default: 'light',
+  default: 'dark',
 });
 
 export const getTheme = selector({
   key: 'getTheme', // unique ID (with respect to other atoms/selectors)
-  get: ({get}) => {
-    const theme = get(themeState);
-
-    return theme;
-  },
+  get: ({get}) => get(themeState),
 });

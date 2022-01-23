@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {CssBaseline, GeistProvider} from '@geist-ui/core';
-import {useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 import {themeState} from 'lib/recoil/atoms/theme';
 
 type Props = {children: React.ReactElement}
@@ -12,10 +12,18 @@ type Props = {children: React.ReactElement}
  * @return {React.ReactElement} React element.
  */
 export default function ThemeProvider({children}: Props): React.ReactElement {
-  const theme = useRecoilValue(themeState);
+  const [theme, setTheme] = useRecoilState(themeState);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('frutariTheme') !== undefined) {
+        setTheme(localStorage.getItem('frutariTheme'));
+      }
+    }
+  }, [theme]);
 
   return (
-    <GeistProvider themeType={theme}>
+    <GeistProvider themeType={theme as string}>
       <CssBaseline />
       {children}
     </GeistProvider>

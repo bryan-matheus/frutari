@@ -10,10 +10,14 @@ import {themeState} from 'lib/recoil/atoms/theme';
  * @return {React.ReactElement} Icon.
  */
 export function ThemeIcon(): React.ReactElement {
-  const [theme, setTheme] = useRecoilState(themeState );
+  const [theme, setTheme] = useRecoilState(themeState);
 
   const onThemeChange = (): void => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('frutariTheme', theme === 'dark' ? 'light' : 'dark');
+    }
   };
 
   if (theme === 'light') {
