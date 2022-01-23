@@ -7,6 +7,14 @@ export const Navbar = styled('nav', {
   justifyContent: 'space-between',
 });
 
+export const NavbarLogoWrapper = styled('nav', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '10px',
+});
+
 export const Items = styled('nav', {
   display: 'flex',
   flexDirection: 'row',

@@ -6,12 +6,14 @@ import {
   Card,
   Button,
   Link,
+  Image as GeistImage,
 } from '@geist-ui/core';
 import {Plus, ShoppingCart} from '@geist-ui/icons';
-import {Items, Navbar} from 'styles/navigation/Navbar';
+import {Items, Navbar, NavbarLogoWrapper} from 'styles/navigation/Navbar';
 import {ThemeIcon} from 'components/theme/ThemeIcon';
 import {Fruit} from 'data/type/Fruit';
 import api from 'services/api';
+import Image from 'next/image';
 
 type Props = {
   fruits: Fruit[]
@@ -24,9 +26,15 @@ type Props = {
  */
 export default function Home({fruits}: Props): React.ReactElement {
   return (
-    <Page>
+    <Page dotBackdrop>
       <Navbar>
-        <Text h2>Frutari</Text>
+        <NavbarLogoWrapper>
+          <Image
+            src={'/logo.png'}
+            width={36}
+            height={36} />
+          <Text h2 margin={0}>Frutari</Text>
+        </NavbarLogoWrapper>
         <Items>
           <ThemeIcon />
           <ShoppingCart cursor={'pointer'} />
@@ -47,7 +55,13 @@ export default function Home({fruits}: Props): React.ReactElement {
             md={12}
             lg={6}
             xl={6}>
-            <Card shadow width="100%">
+            <Card width="100%">
+              <GeistImage
+                src={'/fruit-placeholder.jpg'}
+                width={'100%'}
+                height={'200px'}
+                style={{objectFit: 'cover'}}
+                scale={2/3}/>
               <Card.Content>
                 <Text h4>{fruit.name}</Text>
                 <Text p>
@@ -65,10 +79,10 @@ export default function Home({fruits}: Props): React.ReactElement {
                   {new Intl
                       // eslint-disable-next-line max-len
                       .NumberFormat('en-US', {style: 'currency', currency: 'USD'})
-                      .format(fruit.nutritions.fat + 0.5)
+                      .format(fruit.nutritions.fat * Math.PI + 0.99)
                   }
                 </Text>
-                <Button type='success-light' auto
+                <Button type='success' auto
                   ghost scale={1/1.5} icon={<Plus />}>
                     Add to cart
                 </Button>
