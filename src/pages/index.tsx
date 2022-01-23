@@ -8,12 +8,10 @@ import {
   Link,
   Image as GeistImage,
 } from '@geist-ui/core';
-import {Plus, ShoppingCart} from '@geist-ui/icons';
-import {Items, Navbar, NavbarLogoWrapper} from 'styles/navigation/Navbar';
-import {ThemeIcon} from 'components/theme/ThemeIcon';
+import {Plus} from '@geist-ui/icons';
 import {Fruit} from 'data/type/Fruit';
+import {NavigationBar} from 'components/layout/navigation/NavigationBar';
 import api from 'services/api';
-import Image from 'next/image';
 
 type Props = {
   fruits: Fruit[]
@@ -27,20 +25,7 @@ type Props = {
 export default function Home({fruits}: Props): React.ReactElement {
   return (
     <Page dotBackdrop>
-      <Navbar>
-        <NavbarLogoWrapper>
-          <Image
-            src={'/logo.png'}
-            width={36}
-            height={36} />
-          <Text h2 margin={0}>Frutari</Text>
-        </NavbarLogoWrapper>
-        <Items>
-          <ThemeIcon />
-          <ShoppingCart cursor={'pointer'} />
-        </Items>
-      </Navbar>
-
+      <NavigationBar />
       <Grid.Container
         gap={2}
         justify="center"
