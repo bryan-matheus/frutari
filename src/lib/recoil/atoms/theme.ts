@@ -1,7 +1,7 @@
 import {atom, selector} from 'recoil';
 
 export const themeState = atom<string | null>({
-  key: 'theme',
+  key: 'themeState',
   default: 'dark',
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Text,
   Grid,
@@ -9,6 +9,11 @@ import {
 import {Plus} from '@geist-ui/icons';
 import {Fruit} from 'data/type/Fruit';
 import api from 'services/api';
+import {CartModal} from 'components/cart/CartModal';
+import {Product} from 'data/type/Product';
+import {currencyFormat} from 'utils/currency';
+import {useSetRecoilState} from 'recoil';
+import {productState} from 'lib/recoil/atoms/product';
 
 type Props = {
   fruits: Fruit[]
@@ -20,6 +25,33 @@ type Props = {
  * @return {React.ReactElement} Home page.
  */
 export default function Home({fruits}: Props): React.ReactElement {
+  const [loading, setLoading] = useState(false);
+  const [cartModalOpen, setCartModalOpen] = useState(false);
+  const setProduct = useSetRecoilState(productState);
+
+  const onAddFruitToCart = useCallback((fruit: Fruit) => {
+    const product: Product = {
+      id: fruit.id,
+      fruit,
+      quantity: 1,
+      price: fruit.nutritions.fat * Math.PI + 0.99,
+    };
+
+    setProduct(product);
+    setLoading(true);
+    setCartModalOpen(true);
+  }, []);
+
+  const onCartModalCancel = useCallback(() => {
+    setLoading(false);
+    setCartModalOpen(false);
+  }, []);
+
+  const onCartModalAdd = useCallback(() => {
+    setLoading(false);
+    setCartModalOpen(false);
+  }, []);
+
   return (
     <Grid.Container
       gap={2}
@@ -56,26 +88,39 @@ export default function Home({fruits}: Props): React.ReactElement {
               justifyContent: 'space-between',
             }}>
               <Text b>
-                {new Intl
-                // eslint-disable-next-line max-len
-                    .NumberFormat('en-US', {style: 'currency', currency: 'USD'})
-                    .format(fruit.nutritions.fat * Math.PI + 0.99)
-                }
+                {currencyFormat(fruit.nutritions.fat * Math.PI + 0.99)}
               </Text>
-              <Button type='success' auto
-                ghost scale={1/1.5} icon={<Plus />}>
+              <Button
+                type='success'
+                auto
+                ghost
+                scale={1/1.5}
+                onClick={() => onAddFruitToCart(fruit)}
+                loading={loading}
+                icon={<Plus />}>
                     Add to cart
               </Button>
             </Card.Footer>
           </Card>
         </Grid>
       ))}
+
+      <CartModal
+        visible={cartModalOpen}
+        onCancel={onCartModalCancel}
+        onAdd={onCartModalAdd} />
     </Grid.Container>
   );
 }
 
 export const getStaticProps = async () => {
   const {data} = await api.get('/fruit/all');
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
