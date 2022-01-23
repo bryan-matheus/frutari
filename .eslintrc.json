@@ -21,6 +21,7 @@
     ],
     "rules": {
         "require-jsdoc": "warn",
+        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
         "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 1 }]
     }
 }
