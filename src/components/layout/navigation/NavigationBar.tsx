@@ -1,10 +1,10 @@
 import React from 'react';
 import {Text} from '@geist-ui/core';
-import {ShoppingCart} from '@geist-ui/icons';
 import {ThemeIcon} from 'components/theme/ThemeIcon';
 import Image from 'next/image';
 import {Items, Navbar, NavbarLogoWrapper} from 'styles/navigation/Navbar';
 import Link from 'next/link';
+import {CartButton} from 'components/cart/CartButton';
 
 /**
  * Displays navigation bar.
@@ -25,7 +25,7 @@ export function NavigationBar(): React.ReactElement {
       </Link>
       <Items>
         <ThemeIcon />
-        <ShoppingCart cursor={'pointer'} />
+        <CartButton />
       </Items>
     </Navbar>
   );
