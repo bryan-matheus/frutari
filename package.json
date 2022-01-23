@@ -13,6 +13,7 @@
     "@stitches/react": "^1.2.6",
     "axios": "^0.25.0",
     "inter-ui": "^3.19.3",
+    "nanoid": "^3.2.0",
     "next": "12.0.8",
     "next-themes": "^0.0.15",
     "react": "17.0.2",

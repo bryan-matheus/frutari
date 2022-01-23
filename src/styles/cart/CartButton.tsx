@@ -20,3 +20,11 @@ export const Bubble = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
 });
+
+export const WrapperRow = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+});

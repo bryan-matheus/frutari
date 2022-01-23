@@ -5,8 +5,7 @@ import {Minus, Plus} from '@geist-ui/icons';
 import {currencyFormat} from 'utils/currency';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {cartState} from 'lib/recoil/atoms/cart';
-import {productState} from 'lib/recoil/atoms/product';
-import {Product} from 'data/type/Product';
+import {getCartProductState} from 'lib/recoil/atoms/cartProduct';
 
 type Props = {
   visible: boolean;
@@ -24,8 +23,14 @@ export function CartModal(props: Props): React.ReactElement {
   const {visible, onCancel, onAdd} = props;
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
+
   const setCart = useSetRecoilState(cartState);
-  const product = useRecoilValue(productState);
+  const cartProduct = useRecoilValue(getCartProductState);
+
+  const resetStates = useCallback(() => {
+    setQuantity(1);
+    setPrice(0);
+  }, []);
 
   const onAddQuantity = useCallback(() => {
     if (quantity < 30) {
@@ -40,29 +45,35 @@ export function CartModal(props: Props): React.ReactElement {
   }, [quantity]);
 
   const onInternalCancel = useCallback(() => {
+    resetStates();
     onCancel();
   }, []);
 
   const onInternalAdd = useCallback(() => {
-    const newCartWithProduct: Product = {
-      id: product.id,
-      fruit: product.fruit,
-      quantity,
-      price: product.price * quantity,
-    };
-
     setCart((oldCart) => ({
-      products: [...oldCart.products, newCartWithProduct],
-      total: oldCart.total + price,
+      products: [
+        ...oldCart?.products ?? [],
+        {
+          id: cartProduct.id,
+          fruit: cartProduct.fruit,
+          quantity,
+          price,
+        },
+      ],
+      total: 0,
+      shipping: 0,
+      subtotal: (oldCart?.subtotal ?? 0) + price,
     }));
+
     onAdd();
-  }, []);
+    resetStates();
+  }, [price, quantity]);
 
   useEffect(() => {
-    if (product) {
-      setPrice(product.price * quantity);
+    if (cartProduct) {
+      setPrice(cartProduct.price * quantity);
     }
-  }, [product, quantity]);
+  }, [cartProduct, quantity]);
 
   return (
     <Modal visible={visible}>
@@ -70,7 +81,7 @@ export function CartModal(props: Props): React.ReactElement {
       <Modal.Subtitle>Add this product to your cart?</Modal.Subtitle>
       <Modal.Content>
         <Wrapper>
-          <Text h4>{product.fruit?.name ?? ''}</Text>
+          <Text h4>{cartProduct.fruit?.name ?? ''}</Text>
           <Text h4>{currencyFormat(price)}</Text>
         </Wrapper>
 

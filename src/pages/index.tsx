@@ -5,15 +5,17 @@ import {
   Card,
   Button,
   Image as GeistImage,
+  useToasts,
 } from '@geist-ui/core';
 import {Plus} from '@geist-ui/icons';
 import {Fruit} from 'data/type/Fruit';
 import api from 'services/api';
 import {CartModal} from 'components/cart/CartModal';
-import {Product} from 'data/type/Product';
 import {currencyFormat} from 'utils/currency';
-import {useSetRecoilState} from 'recoil';
-import {productState} from 'lib/recoil/atoms/product';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {cartProductState} from 'lib/recoil/atoms/cartProduct';
+import {CartProduct} from 'data/type/Cart';
+import {nanoid} from 'nanoid';
 
 type Props = {
   fruits: Fruit[]
@@ -25,30 +27,36 @@ type Props = {
  * @return {React.ReactElement} Home page.
  */
 export default function Home({fruits}: Props): React.ReactElement {
-  const [loading, setLoading] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
-  const setProduct = useSetRecoilState(productState);
+  const [, setToast] = useToasts();
+
+  const setCartProduct = useSetRecoilState(cartProductState);
+  const cartProduct = useRecoilValue(cartProductState);
 
   const onAddFruitToCart = useCallback((fruit: Fruit) => {
-    const product: Product = {
-      id: fruit.id,
-      fruit,
-      quantity: 1,
-      price: fruit.nutritions.fat * Math.PI + 0.99,
-    };
+    if (cartProduct.fruit.id !== fruit.id) {
+      setCartProduct((prev) => ({
+        ...prev,
+        id: nanoid(),
+        fruit,
+        quantity: 1,
+        price: fruit.nutritions.fat * Math.PI + 0.99,
+      } as CartProduct));
 
-    setProduct(product);
-    setLoading(true);
-    setCartModalOpen(true);
+      setCartModalOpen(true);
+    } else {
+      setToast({
+        text: `${fruit.name} is already added to cart`,
+        type: 'error',
+      });
+    }
   }, []);
 
   const onCartModalCancel = useCallback(() => {
-    setLoading(false);
     setCartModalOpen(false);
   }, []);
 
   const onCartModalAdd = useCallback(() => {
-    setLoading(false);
     setCartModalOpen(false);
   }, []);
 
@@ -96,7 +104,6 @@ export default function Home({fruits}: Props): React.ReactElement {
                 ghost
                 scale={1/1.5}
                 onClick={() => onAddFruitToCart(fruit)}
-                loading={loading}
                 icon={<Plus />}>
                     Add to cart
               </Button>

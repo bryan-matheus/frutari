@@ -2,11 +2,13 @@ import {Cart} from 'data/type/Cart';
 import {atom, selector} from 'recoil';
 
 export const cartState = atom<Cart>({
-  key: 'cartState',
+  key: 'cart',
   default: {
     products: [],
+    subtotal: 0,
+    shipping: 0,
     total: 0,
-  } as Cart,
+  },
 });
 
 export const getCart = selector({

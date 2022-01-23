@@ -3,13 +3,13 @@ import {ShoppingCart} from '@geist-ui/icons';
 import {cartState} from 'lib/recoil/atoms/cart';
 import React, {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
-import {Bubble, Main} from 'styles/cart/CartButton';
+import {Bubble, Main, WrapperRow} from 'styles/cart/CartButton';
 import {currencyFormat} from 'utils/currency';
 
 /**
  * Displays cart button.
  *
- * @return {React.ReactElement} Cart button.s
+ * @return {React.ReactElement} Cart button.
  */
 export function CartButton(): React.ReactElement {
   const cart = useRecoilValue(cartState);
@@ -17,17 +17,27 @@ export function CartButton(): React.ReactElement {
   const renderPopover = useCallback((): React.ReactElement => {
     return <>
       <Popover.Item title>
-        <span>Your cart</span>
+        <Text h5>Your cart</Text>
       </Popover.Item>
-      <Popover.Item style={{maxHeight: '100px', overflowY: 'scroll'}}>
-        {cart.products.map((product) => (
-          <div key={product.id}>
-            <Text>{product.fruit.name}
-            </Text>
-            <Text>x {product.quantity}</Text>
-          </div>
+      <Popover.Item style={{
+        display: 'flex',
+        flexDirection: 'column',
+        maxHeight: '100px',
+        overflowY: 'scroll',
+      }}>
+        {cart.products?.map((product) => (
+          <WrapperRow key={product.id}>
+            <Text p
+              margin={0}
+              marginTop={'8px'}
+              marginBottom={'8px'}>{product.fruit.name}</Text>
+            <Text p
+              margin={0}
+              marginTop={'8px'}
+              marginBottom={'8px'}>x {product.quantity}</Text>
+          </WrapperRow>
         ))}
-        {cart.products.length === 0 && (
+        {cart.products?.length === 0 && (
           <Text>
             Cart is empty
           </Text>
@@ -45,13 +55,13 @@ export function CartButton(): React.ReactElement {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          <Text p>Total</Text>
-          <Text p>{currencyFormat(cart.total)}</Text>
+          <Text p>Subtotal</Text>
+          <Text p>{currencyFormat(cart?.subtotal ?? 0)}</Text>
         </div>
         <Button type='success' ghost>Go to checkout</Button>
       </Popover.Item>
     </>;
-  }, []);
+  }, [cart]);
 
   return (
     <Main>
