@@ -21,7 +21,6 @@ type Props = {
  */
 export default function Home({fruits}: Props): React.ReactElement {
   return (
-
     <Grid.Container
       gap={2}
       justify="center"
@@ -31,7 +30,7 @@ export default function Home({fruits}: Props): React.ReactElement {
         <Grid
           key={`fruit_${fruit.id}`}
           justify='center'
-          xs={12}
+          xs={24}
           sm={12}
           md={12}
           lg={6}

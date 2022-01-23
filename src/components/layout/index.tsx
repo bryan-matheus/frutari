@@ -1,5 +1,5 @@
 import React from 'react';
-import {Page, Text} from '@geist-ui/core';
+import {Page, Text, useMediaQuery} from '@geist-ui/core';
 import {Link} from '@geist-ui/core';
 import {NavigationBar} from './navigation/NavigationBar';
 
@@ -13,8 +13,10 @@ type Props = {
  * @return {React.ReactElement} Layout.
  */
 export function Layout({children}: Props): React.ReactElement {
+  const xs = useMediaQuery('xs');
+
   return (
-    <Page dotBackdrop>
+    <Page dotBackdrop padding={xs ? '0' : undefined}>
       <NavigationBar />
       {children}
       <Page.Footer>
