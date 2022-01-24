@@ -26,7 +26,7 @@ export function CartButton(): React.ReactElement {
   const navigation = useRouter();
 
   const onCheckoutClick = useCallback(() => {
-    navigation.push('/checkout');
+    navigation.push('/confirmation');
   }, []);
 
   const renderPopover = useCallback((): React.ReactElement => {
@@ -88,7 +88,7 @@ export function CartButton(): React.ReactElement {
           ghost
           iconRight={<Check />}
           disabled={cart.products?.length === 0}
-          onClick={onCheckoutClick}>Checkout</Button>
+          onClick={onCheckoutClick}>Confirm order</Button>
       </Popover.Item>
     </>;
   }, [cart]);
