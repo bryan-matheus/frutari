@@ -1,6 +1,7 @@
 import {Button, Popover, Text} from '@geist-ui/core';
 import {Check, ShoppingCart} from '@geist-ui/icons';
 import {cartState} from 'lib/recoil/atoms/cart';
+import {useRouter} from 'next/router';
 import React, {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
 import {Bubble, Main, Subtotal, WrapperRow} from 'styles/cart/CartButton';
@@ -13,6 +14,12 @@ import {currencyFormat} from 'utils/currency';
  */
 export function CartButton(): React.ReactElement {
   const cart = useRecoilValue(cartState);
+
+  const navigation = useRouter();
+
+  const onCheckoutClick = useCallback(() => {
+    navigation.push('/checkout');
+  }, []);
 
   const renderPopover = useCallback((): React.ReactElement => {
     return <>
@@ -56,7 +63,12 @@ export function CartButton(): React.ReactElement {
             margin={0}
             marginBottom={'16px'}>{currencyFormat(cart?.subtotal ?? 0)}</Text>
         </Subtotal>
-        <Button type='success' ghost iconRight={<Check />}>Checkout</Button>
+        <Button
+          type='success'
+          ghost
+          iconRight={<Check />}
+          disabled={cart.products?.length === 0}
+          onClick={onCheckoutClick}>Checkout</Button>
       </Popover.Item>
     </>;
   }, [cart]);
