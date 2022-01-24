@@ -99,9 +99,8 @@ export default function Home({fruits}: Props): React.ReactElement {
                 {currencyFormat(fruit.nutritions.fat * Math.PI + 0.99)}
               </Text>
               <Button
-                type='success'
+                type='secondary'
                 auto
-                ghost
                 scale={1/1.5}
                 onClick={() => onAddFruitToCart(fruit)}
                 icon={<Plus />}>

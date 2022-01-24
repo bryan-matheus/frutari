@@ -8,7 +8,7 @@ export interface CartProduct {
 }
 
 export interface Cart {
-  products?: CartProduct[];
+  products: CartProduct[];
   shipping?: number;
   subtotal?: number;
   total?: number;

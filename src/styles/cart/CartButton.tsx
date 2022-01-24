@@ -28,3 +28,11 @@ export const WrapperRow = styled('div', {
   justifyContent: 'space-between',
   width: '100%',
 });
+
+export const Subtotal = styled('div', {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});

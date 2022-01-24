@@ -3,9 +3,12 @@ import {Button, Modal, Text} from '@geist-ui/core';
 import {QuantityWrapper, Wrapper} from 'styles/cart/CartModal';
 import {Minus, Plus} from '@geist-ui/icons';
 import {currencyFormat} from 'utils/currency';
-import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {useRecoilValue, useResetRecoilState, useSetRecoilState} from 'recoil';
 import {cartState} from 'lib/recoil/atoms/cart';
-import {getCartProductState} from 'lib/recoil/atoms/cartProduct';
+import {
+  cartProductState,
+  getCartProductState,
+} from 'lib/recoil/atoms/cartProduct';
 
 type Props = {
   visible: boolean;
@@ -26,10 +29,12 @@ export function CartModal(props: Props): React.ReactElement {
 
   const setCart = useSetRecoilState(cartState);
   const cartProduct = useRecoilValue(getCartProductState);
+  const resetCartProduct = useResetRecoilState(cartProductState);
 
   const resetStates = useCallback(() => {
     setQuantity(1);
     setPrice(0);
+    resetCartProduct();
   }, []);
 
   const onAddQuantity = useCallback(() => {

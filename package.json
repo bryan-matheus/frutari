@@ -11,6 +11,8 @@
     "@geist-ui/core": "^2.2.4",
     "@geist-ui/icons": "^1.0.1",
     "@stitches/react": "^1.2.6",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "axios": "^0.25.0",
     "inter-ui": "^3.19.3",
     "nanoid": "^3.2.0",

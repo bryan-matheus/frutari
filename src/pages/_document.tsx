@@ -45,6 +45,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link rel="icon" href="/favicon.webp" />
           <style
             id="stitches"
             dangerouslySetInnerHTML={{__html: getCssText()}} />

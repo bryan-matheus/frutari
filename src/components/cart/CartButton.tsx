@@ -1,9 +1,9 @@
 import {Button, Popover, Text} from '@geist-ui/core';
-import {ShoppingCart} from '@geist-ui/icons';
+import {Check, ShoppingCart} from '@geist-ui/icons';
 import {cartState} from 'lib/recoil/atoms/cart';
 import React, {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
-import {Bubble, Main, WrapperRow} from 'styles/cart/CartButton';
+import {Bubble, Main, Subtotal, WrapperRow} from 'styles/cart/CartButton';
 import {currencyFormat} from 'utils/currency';
 
 /**
@@ -48,26 +48,27 @@ export function CartButton(): React.ReactElement {
         flexDirection: 'column',
         justifyContent: 'space-between',
       }}>
-        <div style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <Text p>Subtotal</Text>
-          <Text p>{currencyFormat(cart?.subtotal ?? 0)}</Text>
-        </div>
-        <Button type='success' ghost>Go to checkout</Button>
+        <Subtotal>
+          <Text h5
+            margin={0}
+            marginBottom={'16px'}>Subtotal</Text>
+          <Text h5
+            margin={0}
+            marginBottom={'16px'}>{currencyFormat(cart?.subtotal ?? 0)}</Text>
+        </Subtotal>
+        <Button type='success' ghost iconRight={<Check />}>Checkout</Button>
       </Popover.Item>
     </>;
   }, [cart]);
 
   return (
     <Main>
-      <Bubble>
-        <Text font={'12px'} p margin={0}>{cart.products?.length ?? 0}</Text>
-      </Bubble>
+      {(cart.products?.length > 0) && (
+        <Bubble>
+          <Text font={'12px'} p margin={0}>{cart.products?.length ?? 0}</Text>
+        </Bubble>
+      )}
+
       <Popover content={renderPopover} placement='leftStart' >
         <ShoppingCart cursor={'pointer'}/>
       </Popover>
