@@ -19,6 +19,8 @@ export function NavigationBar(): React.ReactElement {
           <Image
             src={'/logo.png'}
             width={36}
+            alt={'logo'}
+            objectFit={'contain'}
             height={36} />
           <Text h2 margin={0}>Frutari</Text>
         </NavbarLogoWrapper>

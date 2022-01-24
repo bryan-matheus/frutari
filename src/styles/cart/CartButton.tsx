@@ -29,6 +29,14 @@ export const WrapperRow = styled('div', {
   width: '100%',
 });
 
+export const WrapperTitle = styled('div', {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+});
+
 export const Subtotal = styled('div', {
   width: '100%',
   display: 'flex',

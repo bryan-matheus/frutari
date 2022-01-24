@@ -1,10 +1,11 @@
-import {Button, Popover, Text} from '@geist-ui/core';
+import {Button, Capacity, Popover, Text} from '@geist-ui/core';
 import {Check, ShoppingCart} from '@geist-ui/icons';
 import {cartState} from 'lib/recoil/atoms/cart';
 import {useRouter} from 'next/router';
 import React, {useCallback} from 'react';
 import {useRecoilValue} from 'recoil';
 import {Bubble, Main, Subtotal, WrapperRow} from 'styles/cart/CartButton';
+import {sumProperty} from 'utils';
 import {currencyFormat} from 'utils/currency';
 
 /**
@@ -24,7 +25,30 @@ export function CartButton(): React.ReactElement {
   const renderPopover = useCallback((): React.ReactElement => {
     return <>
       <Popover.Item title>
-        <Text h5>Your cart</Text>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'start',
+          width: '100%',
+        }}>
+          <Text h5>Your cart</Text>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}>
+            <Text p
+              small
+              margin={0}>
+                Max. 180/{sumProperty(cart.products, 'quantity')}
+            </Text>
+            <Capacity
+              value={sumProperty(cart.products, 'quantity')}
+              limit={180}/>
+          </div>
+        </div>
       </Popover.Item>
       <Popover.Item style={{
         display: 'flex',

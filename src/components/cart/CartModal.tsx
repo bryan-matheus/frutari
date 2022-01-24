@@ -3,12 +3,9 @@ import {Button, Modal, Text} from '@geist-ui/core';
 import {QuantityWrapper, Wrapper} from 'styles/cart/CartModal';
 import {Minus, Plus} from '@geist-ui/icons';
 import {currencyFormat} from 'utils/currency';
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from 'recoil';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {cartState} from 'lib/recoil/atoms/cart';
-import {
-  cartProductState,
-  getCartProductState,
-} from 'lib/recoil/atoms/cartProduct';
+import {cartProductState} from 'lib/recoil/atoms/cartProduct';
 
 type Props = {
   visible: boolean;
@@ -24,17 +21,15 @@ type Props = {
  */
 export function CartModal(props: Props): React.ReactElement {
   const {visible, onCancel, onAdd} = props;
-  const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(0);
 
   const setCart = useSetRecoilState(cartState);
-  const cartProduct = useRecoilValue(getCartProductState);
-  const resetCartProduct = useResetRecoilState(cartProductState);
+  const cartProduct = useRecoilValue(cartProductState);
+
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(cartProduct.price);
 
   const resetStates = useCallback(() => {
     setQuantity(1);
-    setPrice(0);
-    resetCartProduct();
   }, []);
 
   const onAddQuantity = useCallback(() => {
@@ -81,7 +76,7 @@ export function CartModal(props: Props): React.ReactElement {
   }, [cartProduct, quantity]);
 
   return (
-    <Modal visible={visible}>
+    <Modal visible={visible} disableBackdropClick>
       <Modal.Title>Add product</Modal.Title>
       <Modal.Subtitle>Add this product to your cart?</Modal.Subtitle>
       <Modal.Content>
@@ -98,7 +93,7 @@ export function CartModal(props: Props): React.ReactElement {
               auto
               icon={<Plus />}
               onClick={onAddQuantity}/>
-            <Text width={'16px'} p>{quantity}</Text>
+            <Text width={'16px'} p>{quantity.toString().padStart(2, '0')}</Text>
             <Button
               scale={2/6}
               auto
