@@ -21,6 +21,13 @@ export const Bubble = styled('div', {
   alignItems: 'center',
 });
 
+export const Wrapper = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'start',
+  width: '100%',
+});
+
 export const WrapperRow = styled('div', {
   display: 'flex',
   flexDirection: 'row',
